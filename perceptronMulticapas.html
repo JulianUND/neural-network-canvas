@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Core - Numeros</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.css' rel='stylesheet' />
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js'></script>
+        <script src='PerceptronMulticapas.js'></script>
+        <script src='Lienzo.js'></script>
+        <script src='ImageAnalize.js'></script>
+        <style>
+            body, html{ padding: 0; margin: 0;}
+            img{
+                border:1px solid blue;
+                margin: 5px;
+            }
+            canvas{
+                margin: 0px;
+                border:1px solid red;
+            }
+            .backcanvas{
+                margin: 0;
+                padding: 5px 5px 0px 5px;
+                text-align:center;
+                height: 100%;
+                color:white;
+            }
+            #perceptronPaint{
+                background-color: white;
+                border:0px solid black;
+            }
+            
+        </style>
+    </head>
+    <body>
+        <div class="container">
+        
+        <h3>Dibujar un número en el recuadro blanco</h3>
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="backcanvas bg-danger">
+                <canvas id="perceptronPaint" width="40" height="50"></canvas>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="backcanvas bg-danger"><br/>
+                <span id="perceptron_status">...</span>
+                </div>
+            </div>
+        </div>
+        <hr/>
+        
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>Número</td>
+                    <td>tasa de acierto (0 al 1)</td>
+                    <td>Porcentaje</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>0</td>
+                    <td><span id="result_0">0</span></td>
+                    <td><span id="acierto_0">0</span></td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td><span id="result_1">0</span></td>
+                    <td><span id="acierto_1">0</span></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td><span id="result_2">0</span></td>
+                    <td><span id="acierto_2">0</span></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td><span id="result_3">0</span></td>
+                    <td><span id="acierto_3">0</span></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td><span id="result_4">0</span></td>
+                    <td><span id="acierto_4">0</span></td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td><span id="result_5">0</span></td>
+                    <td><span id="acierto_5">0</span></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>Ajustes de la red neuronal</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>Tasa aprendizaje</td>
+                    <td>Error deseado</td>
+                    <td>Épocas</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="text" class="form-control" id="perceptron_tasa_aprendizaje" value="0.2" /></td>
+                    <td><input type="text" class="form-control" id="perceptron_error_deseado" value="0.05" /></td>
+                    <td><input type="text" class="form-control" id="perceptron_epocas" value="50000" /></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>Muestras</h3>
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td><img src="img/cero_1.jpg" class="scream" data-value="0" /></td>
+                    <td><img src="img/uno_1.jpg" class="scream" data-value="1" /></td>
+                    <td><img src="img/dos_1.jpg" class="scream" data-value="2" /></td>
+                    <td><img src="img/tres_1.jpg" class="scream" data-value="3" /></td>
+                    <td><img src="img/cuatro_1.jpg" class="scream" data-value="4" /></td>
+                    <td><img src="img/cinco_1.jpg" class="scream" data-value="5" /></td>
+                    <!--<td><img src="img/seis_1.jpg" class="scream" data-value="6" data-main="1"/></td>
+                    <td><img src="img/siete_1.jpg" class="scream" data-value="7" data-main="1"/></td>
+                    <td><img src="img/ocho_1.jpg" class="scream" data-value="8" data-main="1"/></td>-->
+                </tr>
+                <tr>
+                    <td><img src="img/cero_2.jpg" class="scream" data-value="0" /></td>
+                    <td><img src="img/uno_2.jpg" class="scream" data-value="1" /></td>
+                    <td><img src="img/dos_2.jpg" class="scream" data-value="2" /></td>
+                    <td><img src="img/tres_2.jpg" class="scream" data-value="3" /></td>
+                    <td><img src="img/cuatro_2.jpg" class="scream" data-value="4" /></td>
+                    <td><img src="img/cinco_2.jpg" class="scream" data-value="5" /></td>
+                    <!--<td><img src="img/seis_2.jpg" class="scream" data-value="6" /></td>
+                    <td><img src="img/siete_2.jpg" class="scream" data-value="7" /></td>
+                    <td><img src="img/ocho_2.jpg" class="scream" data-value="8" /></td>-->
+                </tr>
+                <tr>
+                    <td><img src="img/cero_3.jpg" class="scream" data-value="0" /></td>
+                    <td><img src="img/uno_3.jpg" class="scream" data-value="1" /></td>
+                    <td><img src="img/dos_3.jpg" class="scream" data-value="2" /></td>
+                    <td><img src="img/tres_3.jpg" class="scream" data-value="3" /></td>
+                    <td><img src="img/cuatro_3.jpg" class="scream" data-value="4" /></td>
+                    <td><img src="img/cinco_3.jpg" class="scream" data-value="5" /></td>
+                    <!--<td><img src="img/seis_3.jpg" class="scream" data-value="6" /></td>
+                    <td><img src="img/siete_3.jpg" class="scream" data-value="7" /></td>
+                    <td><img src="img/ocho_3.jpg" class="scream" data-value="8" /></td>-->
+                </tr>
+                <tr>
+                    <td><img src="img/cero_4.jpg" class="scream" data-value="0" /></td>
+                    <td><img src="img/uno_4.jpg" class="scream" data-value="1" /></td>
+                    <td><img src="img/dos_4.jpg" class="scream" data-value="2" /></td>
+                    <td><img src="img/tres_4.jpg" class="scream" data-value="3" /></td>
+                    <td><img src="img/cuatro_4.jpg" class="scream" data-value="4" /></td>
+                    <td><img src="img/cinco_4.jpg" class="scream" data-value="5" /></td>
+                    <!--<td><img src="img/seis_3.jpg" class="scream" data-value="6" /></td>
+                    <td><img src="img/siete_3.jpg" class="scream" data-value="7" /></td>
+                    <td><img src="img/ocho_3.jpg" class="scream" data-value="8" /></td>-->
+                </tr>
+            </tbody>
+        </table>
+        
+        <canvas id="myCanvas" style="display:none;"></canvas>
+        
+        
+        </div>
+        
+        <script>
+            var pm = new PerceptronMulticapas();
+            var analize = new ImageAnalize();
+            analize.crossOrigin = "Anonynous";
+
+            var inputs = [];
+
+            $(document).ready(function(){
+                var total = 0;
+                var count = 0;
+
+                $('.scream').each(function(){
+                    total++;
+                });
+
+                $('.scream').one("load", function() {
+                    count++;
+                    if(count === total){
+                        inicialize();
+                    }
+                }).each(function() {
+                    if(this.complete) {
+                        $(this).load();
+
+                    }
+                });
+            });
+
+            function inicialize(){
+                //cantidad de cuadros a analizar de las imagenes. Cuanto más cuadros más precisa es la detección
+                var framesCount = 10;
+
+                //inicializamos el objeto indicando la cantidad de cuadros a analizar
+                analize.init(framesCount);
+
+                //obtenemos las entradas de las imagenes para enviar al perceptron y que este aprenda de estos datos
+                inputs = analize.get("myCanvas", "scream");
+
+                var lienzo = new Lienzo();
+                lienzo.init("perceptronPaint");
+
+                document.getElementById("perceptronPaint").onmouseup = function (e){
+                    lienzo.generateThumbnail(function(){
+                        var input = analize.get("perceptronPaint", "", 0);
+
+                        $('#perceptron_status').html("Procesando ...");
+                        setTimeout(function(){
+                            predic(input);
+                        },100);
+                    });
+                };
+            }
+
+            function predic(values){
+                var tempNumber = 0;
+                var tempMaxValue = 0;
+
+                var tasa_aprendizaje = parseFloat($('#perceptron_tasa_aprendizaje').val());
+                var error_deseado = parseFloat($('#perceptron_error_deseado').val());
+                var epocas = parseInt($('#perceptron_epocas').val());            
+
+                var out = [];
+                var i = 0;
+                for(var i=0; i < 6; i++){
+                    for(var n=0; n < inputs.length; n++){
+                        if(inputs[n].id !== i){
+                            inputs[n].out[0] = 0;
+                        }else{
+                            inputs[n].out[0] = 1;
+                        }
+                        if(inputs[n].main === 1 || (inputs[n].main === 0 && inputs[n].id === i)){
+                            out.push(inputs[n]);
+                        }
+                    }
+
+                    pm.init(inputs, tasa_aprendizaje, error_deseado, -0.25, 0.25, epocas);
+
+                    var val = pm.predic(values);
+                    $("#result_" + i).html(val);
+                    $("#acierto_" + i).html(parseInt(val*100) + " %");
+                }
+                for(var i=0; i < 9; i++){
+                    var v = parseFloat($("#result_" + i).html());
+                    $("#result_" + i).parents("tr").removeClass("table-success");
+                    if(v > tempMaxValue){
+                        tempMaxValue = v;
+                        tempNumber = i;
+                    }
+                }
+                $("#result_" + tempNumber).parents("tr").addClass("table-success");
+                $('#perceptron_status').html("Proceso completado");
+                console.log(tempNumber); 
+        }
+        </script>
+    </body>
+</html>
